@@ -1,0 +1,106 @@
+.main-banner
+  background-image: url('../img/blocks-1.png')
+  background-position: calc(100% - 35px) center
+  background-size: 42%
+  background-repeat: no-repeat
+  margin-top: 71px
+
+  @include lg-width-992
+    background-position: 44vw center
+
+  @include md-width-768
+    padding-bottom: 130px
+    margin-top: 0
+    background-position: calc(100% - 15px) calc(100% - 10px)
+    background-size: calc(100% - 30px)
+
+  @include sm-width-576
+    padding-bottom: 0
+    background-position: center 3px
+    background-size: 29%
+
+  .main-banner__container
+    position: relative
+
+  .main-banner__content
+    padding-top: 20px
+    width: 55%
+
+    @include md-width-768
+      background: transparent
+      padding-top: 75px
+      width: 95%
+
+    @include sm-width-576
+      padding-top: 35px
+      padding-bottom: 65px
+      width: 100%
+
+  .main-banner__title
+    position: relative
+    margin-top: 0
+    margin-bottom: 35px
+    color: $primary-text-color
+    font-weight: 700
+
+    //@media (max-width: 690px)
+    @include sm-width-576
+      font-size: 22px
+      letter-spacing: 1px
+      text-align: center
+
+  .main-banner__description
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    font-size: 1.2em
+
+
+  .main-banner__description-item
+    position: relative
+    width: 46%
+    padding-bottom: 40px
+    padding-left: 60px
+    padding-right: 50px
+    &:before
+      position: absolute
+      content: ''
+      background-image: url("../img/icons/icon-1.png")
+      background-position: center center
+      background-repeat: no-repeat
+      background-size: contain
+      width: 51px
+      height: 64px
+      top: 0
+      left: 0
+
+      @include sm-width-576
+        width: 40px
+        height: 40px
+
+    &:nth-child(2):before
+      background-image: url("../img/icons/icon-2.png")
+
+    &:nth-child(3):before
+      background-image: url("../img/icons/icon-3.png")
+
+    &:nth-child(4):before
+      background-image: url("../img/icons/icon-4.png")
+
+    &:nth-child(5):before
+      background-image: url("../img/cover-krutyakova.jpg")
+
+    @include md-width-768
+      padding-bottom: 25px
+
+    @include sm-width-576
+      width: 90%
+      padding-left: 60px
+      padding-right: 0
+
+  .main-banner__button
+    display: inline-block
+    margin: 0 auto
+    padding: 20px 30px
+    align-self: flex-start
+

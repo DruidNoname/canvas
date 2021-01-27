@@ -1,0 +1,48 @@
+.btn
+  display: block
+  cursor: pointer
+  border: none
+  white-space: nowrap
+  border-radius: 10px
+  user-select: none
+  background-color: $primary-btn-color
+  color: #fff
+  font-size: 14px
+  font-weight: 700
+  text-transform: uppercase
+  &:hover
+    background-color: darken($primary-btn-color, 10%)
+    color: rgb(255, 255, 255)
+
+  &:focus,
+  &:active,
+  &:active:focus
+    color: $primary-color
+    outline: none
+
+a.btn
+  text-decoration: none
+
+.btn_secondary
+  border: 3px solid $secondary-btn-color
+  background-color: transparent
+  color: $secondary-btn-color
+  &:hover
+    background-color: $secondary-btn-color
+    color: $primary-color
+  &:focus
+    color: $secondary-btn-color
+
+
+.btn__primary
+  margin: 0 auto
+  padding: 15px 0
+  text-align: center
+  width: $primary-btn-width
+  max-width: $primary-btn-width
+  @include xs-width-420
+    width: 300px
+    max-width: 100%
+    font-size: 13px
+
+

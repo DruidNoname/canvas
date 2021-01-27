@@ -1,0 +1,79 @@
+@mixin font-face($family, $path, $svg, $weight: normal, $style: normal)
+  @font-face
+    font-family: $family
+    src: url('#{$path}.eot')
+    src: url('#{$path}.eot?#iefix') format('embedded-opentype'), url('#{$path}.woff') format('woff'), url('#{$path}.ttf') format('truetype'), url('#{$path}.svg##{$svg}') format('svg')
+    font-weight: $weight
+    font-style: $style
+    font-display: swap
+
+@mixin font-face-it($family, $path, $svg, $weight: normal, $style: italic)
+  @font-face
+    font-family: $family
+    src: url('#{$path}.eot')
+    src: url('#{$path}.eot?#iefix') format('embedded-opentype'), url('#{$path}.woff') format('woff'), url('#{$path}.ttf') format('truetype'), url('#{$path}.svg##{$svg}') format('svg')
+    font-weight: $weight
+    font-style: $style
+    font-display: swap
+
+//Медиазапросы
+
+@mixin xl-width-1200-reverse ()
+  @media (min-width: 1200px)
+    @content
+
+@mixin lg-width-992 ()
+  @media (max-width: 992px)
+    @content
+
+@mixin md-width-768 ()
+  @media (max-width: 768px)
+    @content
+
+@mixin sm-width-576 ()
+  @media (max-width: 576px)
+    @content
+
+@mixin xs-width-420 ()
+  @media (max-width: 420px)
+    @content
+
+
+
+
+
+@mixin primary-gradient ()
+  background: rgba(255, 77, 0, 0.86)
+  background: -webkit-linear-gradient(right, rgba(255, 77, 0, 0.86), rgba(255, 204, 0, 0.86))
+  background: -moz-linear-gradient(right, rgba(255, 77, 0, 0.86), rgba(255, 204, 0, 0.86))
+  background: linear-gradient(to left, rgba(255, 77, 0, 0.86), rgba(255, 204, 0, 0.86))
+
+@mixin flex-display-pf ()
+  display: -webkit-box
+  display: -webkit-flex
+  display: -ms-flexbox
+  display: flex
+
+@mixin flex-vertical-pf ()
+  -webkit-box-orient: vertical
+  -webkit-box-direction: normal
+  -webkit-flex-direction: column
+  -ms-flex-direction: column
+  flex-direction: column
+
+@mixin flex-horisontal-pf ()
+  -webkit-box-orient: horizontal
+  -webkit-box-direction: normal
+  -ms-flex-direction: row
+  flex-direction: row
+
+@mixin flex-auto-pf ()
+  -webkit-box-flex: 1
+  -webkit-flex: auto
+  -ms-flex: auto
+  flex: auto
+
+@mixin reset-list
+  margin: 0
+  padding: 0
+  list-style: none

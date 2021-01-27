@@ -1,0 +1,47 @@
+details summary::-webkit-details-marker
+  display: none
+details > summary
+  list-style: none
+
+summary
+  position: relative
+  &:focus
+    outline: none
+
+.rotating-cross
+  position: absolute
+  right: 30px
+  top: 19px
+  width: 40px
+  height: 40px
+  opacity: 0.3
+  padding: 8px
+  pointer-events: none
+  transition: transform .5s
+
+summary:hover .rotating-cross
+  opacity: 0.8
+  background-color: rgba(0,0,0,.1)
+  border-radius: 50%
+
+.rotating-cross:before,
+.rotating-cross:after
+  position: absolute
+  left: 19px
+  content: ' '
+  height: 25px
+  width: 2px
+  background-color: #333
+  @include md-width-768
+    left: 45px
+
+.rotating-cross:before
+  transform: rotate(90deg)
+
+details[open] .rotating-cross
+ transform: rotate(45deg)
+
+@media screen and (max-width: 765px)
+  .rotating-cross
+    display: none
+

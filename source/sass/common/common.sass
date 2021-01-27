@@ -1,0 +1,65 @@
+.page-container
+  max-width: 1170px
+  width: calc(100% - 20px)
+  padding-top: 30px
+  padding-bottom: 70px
+  margin: 0 auto
+  @include lg-width-992
+   max-width: 960px
+   padding-top: 60px
+   padding-bottom: 80px
+  @include md-width-768
+    max-width: 720px
+  @include sm-width-576
+    max-width: 540px
+    padding-top: 40px
+    padding-bottom: 40px
+  @include xs-width-420
+    max-width: 300px
+
+
+.gr
+  background: $primary-back-color
+
+.yl
+  background: $secondary-back-color
+
+.grn
+  background: $tertiary-back-color
+
+.section-title
+  font-weight: 800
+  font-size: 32px
+
+  @include sm-width-576
+    font-size: 18px
+    font-weight: 600
+
+  .section-title__pretitle
+    display: inline-flex
+    align-items: center
+    font-size: 0.8em
+    color: rgb(235, 68, 71)
+    font-weight: 400
+
+.section-subtitle
+  font-size: 22px
+  font-weight: 500
+  margin-bottom: 56px
+
+  @include sm-width-576
+    font-size: 18px
+
+.section-post-subtitle
+  text-align: center
+  font-size: 18px
+  color: $secondary-text-color
+  margin-bottom: 58px
+
+  @include sm-width-576
+    font-size: 14px
+
+.link-no-link
+  text-decoration: none
+  color: inherit
+

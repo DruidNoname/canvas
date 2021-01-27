@@ -1,0 +1,27 @@
+.circle-number__circle
+  background: rgb(227, 240, 253)
+  padding: 12px
+  display: flex
+  justify-content: center
+  align-items: center
+  border-radius: 50%
+  width: 6px
+  height: 6px
+  max-width: 6px
+  max-height: 6px
+  margin-bottom: 20px
+  @include sm-width-576
+    margin-bottom: 10px
+
+  .circle-number__number
+    color: $primary-link-color
+    font-weight: 700
+
+.circle-number__circle.circle-number_red
+  display: inline-flex
+  background: rgb(255, 234, 239)
+  margin-bottom: 0
+  margin-right: 11px
+  .circle-number__number
+    color: inherit
+    font-size: 16px

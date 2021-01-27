@@ -1,0 +1,60 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <form class="modal-1_form form" id="form-1" method="post" action="javascript:void(0);" onsubmit="ajax1();">
+                    <div class="form__item">
+                        <label class="form_label form_label-icon form_label-icon-name" for="name-1"></label>
+                        <input id="name-1" class="form_input form_input-name" name="name" type="text" value="" placeholder="Имя*" required>
+                    </div>
+                    <div class="form__item">
+                        <label class="form_label form_label-icon form_label-icon-tel" for="tel-1"></label>
+                        <input id="tel-1" class="form_input form_input-tel" pattern="[+]7[\(]\d{3}[\)]\s\d{3}[\-]\d{4}" name="tel" type="tel" value="" placeholder="Телефон*" required>
+                    </div>
+
+                    <div class="form__item">
+                        <label class="form_label form_label-icon form_label-icon-email" for="mail-1"></label>
+                        <input id="mail-1" class="form_input form_input-mail" name="mail" type="email" value="" placeholder="E-mail">
+                    </div>
+                    <div class="form__item form__item-send">
+                        <input id="send-values" class="btn btn__primary visual-form__btn send-values" name="send" type="submit" value="">
+                        <input id="formName" class="formName" name="formName" type="hidden" value="">
+                        <input name="submit" type="hidden" class="submit" disabled="" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="form__item form__item_privacy">
+                    Нажимая на кнопку, вы даете согласие на&nbsp;<a href="https://www.elcode.ru/pravovaya-informatsiya/polzovatelskoe-soglashenie" class="personal-data__link" target="_blank">обработку персональных данных.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <header class="modal-success_header" id="successModalLabel">Ошибка!</header>
+            </div>
+            <div class="modal-body">
+                <p class="modal-success_text">Перезагрузите страницу.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal modal-success" id="modal-success">
+    <div class="modal-in">
+        <header class="modal-success_header">Ошибка!</header>
+        <p class="modal-success_text">Перезагрузите страницу.</p>
+        <p class="modal_close-w"><a class="modal_close" href="#"><span class="modal_close_line modal_close_line-1"><button class="close">&times;</button></span></a></p>
+    </div>
+</div>

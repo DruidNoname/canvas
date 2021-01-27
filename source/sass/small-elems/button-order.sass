@@ -1,0 +1,31 @@
+$primary-content-color: rgb(245, 136, 29)
+
+#order
+  display: block
+  position: fixed
+  width: 7em
+  height: 7em
+  bottom: .3em
+  right: .3em
+  text-align: center
+  label
+    display: block
+    font-size: 0.9em
+    font-weight: 500
+    color: $primary-content-color
+    line-height: 1em
+    @media screen and (max-width: 765px)
+      color: transparent
+  .order__button
+    background-color: $primary-content-color
+    color: rgb(255, 255, 255)
+    width: 5.5em
+    height: 5.5em
+    border-color: rgba(0, 0, 0, 0.3)
+    border-radius: 50%
+    cursor: pointer
+    &:hover
+      box-shadow: $primary-content-color 0 0 10px
+    img
+      display: inline
+      width: 80%

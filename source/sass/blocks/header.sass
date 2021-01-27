@@ -1,0 +1,76 @@
+.header
+  background: $primary-color
+  display: block
+  width: 100vw
+  color: #000000
+  position: fixed
+  top: 0
+  z-index: 10
+  @include md-width-768
+    position: relative
+
+.header__content-wrapper
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 11px 0
+  @include lg-width-992
+    flex-wrap: wrap
+    padding: 10px
+
+.header__logo
+  font-size: 14px
+  font-weight: bold
+  text-transform: uppercase
+  max-width: 220px
+  line-height: 1.5em
+  @include sm-width-576
+    flex-grow: 1
+    max-width: 300px
+    font-size: 0.9em
+    margin-bottom: 20px
+
+.header__contact-group
+  display: flex
+  justify-content: flex-end
+  align-items: center
+  @include sm-width-576
+    justify-content: space-between
+    width: 100%
+
+.header__number
+  display: block
+  font-size: 20px
+  margin-right: 40px
+  @include sm-width-576
+    flex-grow: 1
+    font-size: 1em
+
+.header__button
+  font-size: 14px
+  padding: 12px 26px
+  font-weight: 700
+  @include sm-width-576
+    padding: 12px 15px
+    font-size: 0.75em
+
+  &.header__nav-button
+    position: absolute
+    bottom: -40px
+    left: 10px
+    font-size: 0.86em
+    padding: 6px 20px
+    background: red
+
+.header-title
+  font-size: 1.2em
+  text-align: center
+  span
+    font-size: 1.46em
+    font-weight: 600
+
+.header--scroll
+  border-bottom: 0
+  box-shadow: 0 0 14px 0 rgba(52, 84, 226, 0.7)
+  .header__content-wrapper
+    box-shadow: none

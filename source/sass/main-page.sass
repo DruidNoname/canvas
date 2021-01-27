@@ -1,0 +1,515 @@
+//**************************************
+// *СТИЛИ ДЛЯ основных обёрток и секций
+// ***************************************
+
+.main
+  width: 100%
+  flex-grow: 1
+  box-sizing: border-box
+  margin: auto
+  transition: all 0.1s linear
+  position: relative
+
+
+.nav-arrow-line
+  width: 18px
+  height: 4px
+  margin: auto
+  background: rgb(218, 82, 0)
+  transform: rotate(-45deg)
+  transform-origin: 50% 50%
+  position: absolute
+
+.nav-arrow-line-2
+  -webkit-transform: rotate(45deg)
+  transform: rotate(45deg)
+
+.box,
+.box2
+  max-width: 300px
+  margin: auto
+
+.simple-link
+  text-decoration: underline
+  color: blue
+
+#more-info
+  background-color: white
+  .box
+    border-top: 2px solid black
+    border-bottom: 2px solid black
+
+.learn-more
+  font-size: 1.2em
+  text-align: center
+  margin: 25px 0
+
+.learn-more__title
+  font-size: 1.6em
+  font-weight: 500
+  margin: 10px 0
+.learn-more__text
+  font-size: 1.2em
+
+
+
+.excentric-button_text
+  display: none
+
+.excentric-button_pic
+  display: block
+
+  img
+    margin-top: 15%
+    width: 75%
+
+//делаем мобильную кнопку неотличимой от недомобильной кнопки
+
+section:not(#more-info)
+  .learn-more__buttons //убираем остальные кнопки лерн-мо
+    display: none
+
+
+.btn_mobile //делаем мобильную кнопку
+  display: block
+  width: 5.5em
+  height: 5.5em
+  border-radius: 50%
+  margin: 30px auto
+  color: rgb(255, 255, 255)
+  img
+    margin-top: 15%
+    width: 75%
+
+
+//other-sections
+.feature:nth-child(odd)
+  background: $secondary-color
+
+.about-system__title,
+.about-system__logo
+  font-size: 2.2em
+  text-align: center
+  padding: 0.6em 0 .3em
+
+.about-system__wrapper
+  @include flex-display-pf
+  -ms-flex-wrap: wrap
+  flex-wrap: wrap
+  -webkit-box-pack: justify
+  -ms-flex-pack: justify
+  justify-content: space-between
+  .about-system__item
+    flex-basis: calc(50% - 0.7em)
+    @include flex-display-pf
+    padding: .2em 0
+    .about-system__pic
+      margin: 20.7px 30px
+      min-width: 60px
+      height: 60px
+      background-image: url("../img/konsplus-info.png")
+      background-size: 180px
+      background-repeat: no-repeat
+    &:nth-child(2)>.about-system__pic
+      background-position: bottom left
+
+    &:nth-child(3)>.about-system__pic
+      background-position: top center
+
+    &:nth-child(4)>.about-system__pic
+      background-position: top right
+
+    &:nth-child(5)>.about-system__pic
+      background-position: bottom center
+
+    &:nth-child(6)>.about-system__pic
+      background-position: bottom right
+
+    .about-system__descriptor
+      p:first-child
+        font-weight: 700
+.supporting
+  h3
+    padding: 10px 0
+  .supporting_item
+    padding-bottom: 25px
+
+.secondary-info
+  font-size: 14px
+  color: #4f4f4f
+
+h2.secondary-title
+ padding-top: 2em
+
+.triple-card
+  padding: 15px 0
+  @include flex-display-pf
+  @include flex-horisontal-pf
+  justify-content: space-between
+  text-align: center
+  h3
+    font-size: 1.26em
+  .triple-card__item
+    flex-basis: calc(28% - 20px)
+    padding: 0 25px
+    margin: 15px 0
+    .triple-card__item_glyph
+      display: inline-block
+      height: 100px
+      width: 100px
+      background: url(../img/elcods-icons.jpg) no-repeat
+      -webkit-background-size: 580%
+      background-size: 580%
+  .triple-card__item:first-child
+    .triple-card__item_glyph
+      background-position: -385px 8px
+
+  .triple-card__item:nth-child(2)
+    .triple-card__item_glyph
+      background-position: 5px -81px
+
+  .triple-card__item:nth-child(3)
+    .triple-card__item_glyph
+      background-position: -95px -165px
+
+.otzyvy-klientov
+  padding: 15px 0
+  @include flex-display-pf
+  @include flex-horisontal-pf
+  -ms-flex-wrap: wrap
+  flex-wrap: wrap
+  justify-content: space-between
+  .otzyvy-klientov__item
+    position: relative
+    flex-basis: calc(48% - 50px)
+    padding: 40px 25px
+    margin: 35px 0
+    background: #fff
+    box-shadow: rgb(89, 86, 87) 2px 2px 5px
+    text-align: center
+    font-size: 0.84em
+    &:before
+      position: absolute
+      width: 100px
+      height: 100px
+      border-radius: 50%
+      top: -50px
+      left: calc(50% - 50px)
+      background-image: url(../img/sprite-faces.png)
+      background-size: 300px
+      background-position: 0 198px
+      content: ''
+      box-shadow: 0 -4px 10px -7px #595657
+    &:nth-child(2):before
+      background-position: 200px 198px
+    &:nth-child(3):before
+      background-position: 400px 198px
+    &:nth-child(4):before
+      background-position: 0 298px
+    .otzyvy-klientov__primary-title
+      padding: 10px 0
+      font-size: 1.1em
+      font-weight: 700
+    .otzyvy-klientov__secondary-title
+      color: #8c8c8c
+    .otzyvy-klientov__content
+      padding: 10px 0
+      text-align: left
+
+.otzyvy-klientov.otzyvy-klientov_elcode
+  .otzyvy-klientov__item:first-child:before
+    background-position: 200px 198px
+  .otzyvy-klientov__item:nth-child(2):before
+    background-position: 0 198px
+  .otzyvy-klientov__item:nth-child(3):before
+    background-position: 500px 98px
+  .otzyvy-klientov__item:nth-child(4):before
+    background-position: 400px 198px
+
+.quad-cards
+  padding: 15px 0
+  @include flex-display-pf
+  @include flex-horisontal-pf
+  -ms-flex-wrap: wrap
+  flex-wrap: wrap
+  justify-content: space-between
+  .quad-cards__item
+    @include flex-display-pf
+    @include flex-vertical-pf
+    -ms-flex-wrap: wrap
+    flex-wrap: wrap
+    justify-content: space-between
+    flex-basis: calc(48% - 50px)
+    padding: 40px 25px
+    margin: 15px 0
+    box-shadow: rgb(89, 86, 87) 2px 2px 5px
+    &:first-child
+      background: #fff url(../img/stripes2.png) 30% 7% no-repeat
+    &:nth-child(2)
+      background: #fff url(../img/stripes2.png) 84% 6% no-repeat
+    &:nth-child(3)
+      background: #fff url(../img/stripes2.png) 30% 66% no-repeat
+    &:nth-child(4)
+      background: #fff url(../img/stripes2.png) 0% 51% repeat
+
+  .selling-buttons
+    @include flex-display-pf
+    justify-content: space-around
+
+
+
+.form
+  position: relative
+
+.org
+  margin-bottom: 10px
+  font-size: 18px
+
+.modal
+  margin: 0
+  padding: 0
+
+.contact
+  padding-top: 15px
+
+.button-more
+  display: none
+
+@media screen and (min-width: 300px)
+  .box,
+  .box2
+    max-width: 90%
+
+@media screen and (min-width: 500px)
+  .advantage-menu
+    .advantage-container
+      -webkit-box-orient: horizontal
+      -webkit-box-direction: normal
+      -ms-flex-direction: row
+      flex-direction: row
+      -ms-flex-wrap: wrap
+      flex-wrap: wrap
+      -webkit-box-pack: justify
+      -ms-flex-pack: justify
+      justify-content: space-between
+      -webkit-box-align: stretch
+      -ms-flex-align: stretch
+      align-items: stretch
+      .advantage-card_styling
+        width: 43%
+
+@media only screen and (min-width: 765px)
+  .advantage-menu
+    .advantage-container
+      .advantage-card_styling
+        width: 30%
+
+  #more-info .learn-more__buttons,
+  section:not(#more-info) .learn-more__buttons
+    .excentric-buttons
+      .learn-more__btn
+        color: rgb(255, 255, 255)
+        height: 1.5em
+        width: auto
+        border-radius: 30px
+        font-size: .7em
+        padding: 10px
+
+  #more-info
+    .learn-more__buttons
+      .excentric-buttons
+        img
+          display: inline
+
+  .excentric-button_text
+    display: block
+
+  .about-system__item
+    .about-system__pic
+      width: 75px
+
+  .excentric-button_pic
+    display: none
+
+  .btn.btn_mobile
+    display: none
+
+  .button-more
+    display: block
+    color: #fff
+    height: 1.5em
+    width: 30%
+    border-radius: 30px
+    padding: 10px
+    margin: 5px auto 25px
+
+  .logo__image
+    margin-top: 15px
+
+@media only screen and (min-width: 961px)
+  .box
+    max-width: 960px
+
+  section:not(#more-info) .learn-more__buttons,
+  #more-info .learn-more__buttons
+    margin: 30px 0
+    @include flex-display-pf
+    -ms-flex-wrap: wrap
+    flex-wrap: wrap
+    justify-content: space-around
+    .excentric-buttons
+      width: 30%
+      img
+        width: 66%
+        position: relative
+        bottom: -5px
+        z-index: 1
+      .learn-more__btn
+        position: relative
+        font-size: 1em
+        z-index: 2
+
+@media only screen and (min-width: 1101px)
+  .box
+    max-width: 1170px
+    min-height: inherit
+  .box2
+    max-width: 800px
+
+@media screen and (max-width: 1150px)
+  .top_nav__link
+    font-size: 12px
+
+@media screen and (max-width: 1000px)
+  .text
+    font-size: 18px
+
+@media screen and (max-width: 960px)
+  .features__list
+    display: flex
+    flex-direction: column
+  .video_flex
+    -webkit-box-orient: vertical
+    -webkit-box-direction: normal
+    -webkit-flex-direction: column
+    -ms-flex-direction: column
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
+    margin: 15px 0
+    iframe
+      margin-top: 1.5em
+
+@media screen and (max-width: 812px)
+  .for_flex
+    width: 100%
+    width: -moz-calc(100%)
+    width: calc(100%)
+    display: block
+    margin-bottom: 20px
+  .action_slide div
+    display: block
+    width: 100%
+  .top_nav__link
+    font-size: 16px
+  .logo__image
+    margin-right: 0
+    margin-left: 20px
+
+@media screen and (max-width: 765px)
+  .mobile-hidden //важный элемент, прячет неугодные в мобильной версии вещи
+    display: none!important
+
+  .main
+    top: 0
+    margin-bottom: 0
+
+  #about-system
+    margin-top: 100px
+
+  #services h2
+    font-size: 22px
+
+  .about-system__wrapper
+    .about-system__item
+      flex-basis: calc(100% - 0.7em)
+
+  .triple-card
+    -webkit-flex-wrap: wrap
+    -ms-flex-wrap: wrap
+    flex-wrap: wrap
+    .triple-card__item
+      margin: 0
+      flex-basis: calc(100% - 20px)
+
+  .otzyvy-klientov
+    .otzyvy-klientov__item
+      flex-basis: calc(100% - 50px)
+      padding: 13px 10px
+      .otzyvy-klientov__primary-title
+        margin-top: 25px
+
+  .quad-cards
+    justify-content: center
+    .quad-cards__item
+      flex-basis: calc(100% - 50px)
+      padding: 13px 10px
+
+  .our-achieves
+    -webkit-flex-wrap: wrap
+    -ms-flex-wrap: wrap
+    flex-wrap: wrap
+    .our-achieves__item
+      flex-basis: calc(50% - 20px)
+
+  .mobile-title
+    font-size: 20px
+
+
+@media screen and (max-width: 600px)
+  #services h2
+    font-size: 18px
+
+  .box--header
+    padding: 15px 0
+    @include  flex-display-pf
+    justify-content: space-between
+    align-items: center
+    .logo__image
+      padding-right: 0
+  .advantages__item
+    height: 125px
+    &:last-child
+      margin-bottom: 25px
+
+@media screen and (max-width: 480px)
+  #glav_banner .flex-section-wrapper
+    -webkit-box-pack: start
+    -ms-flex-pack: start
+    justify-content: flex-start
+  .quad-cards
+    .selling-buttons
+      .btn
+        &:first-child
+          margin-right: 7px
+        &:last-child
+          margin-left: 7px
+          padding-right: 7px
+          padding-left: 7px
+
+@media screen and (max-width: 400px)
+  .logo__image
+    width: 145px
+  #services p.services__title
+    font-size: 18px
+    letter-spacing: 0.1em
+    text-transform: uppercase
+    line-height: 1em
+  .services__text
+    font-size: 14px
+    margin: 0 auto
+  .about-system__title
+    font-size: 18px
+    font-weight: 700
+  #glav_banner .box
+    font-size: 13px

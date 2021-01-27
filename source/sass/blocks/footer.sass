@@ -1,0 +1,62 @@
+.footer
+  padding-top: 27px
+  text-align: center
+  .footer__phone
+    display: flex
+    justify-content: center
+    align-items: center
+    font-size: 18px
+    //color: $primary-text-color
+    &:before
+      content: ''
+      display: inline-block
+      background-image: url('../img/icons/phone.svg')
+      background-size: contain
+      background-position: center
+      background-repeat: no-repeat
+      width: 1.1em
+      height: 1.1em
+      margin-right: 10px
+
+  .footer__rights
+    color: $secondary-text-color
+
+.footer-social-container
+  @include flex-display-pf
+  @include flex-horisontal-pf
+  justify-content: center
+  padding-bottom: 4.5em
+  .social-icon
+    width: 70px
+    min-width: 70px
+    height: 70px
+    background: url(../img/1-freepik.png) no-repeat
+    background-size: 360% auto
+    margin: 0 30px
+  .social-icon:first-child
+    background-position: -5px -81px
+  .social-icon:nth-child(2)
+    background-position: -92px 0
+  .social-icon:nth-child(3)
+    background-position: -7px 0
+
+@media only screen and (min-width: 765px)
+  .footer-item
+    flex: 1
+
+@media screen and (max-width: 765px)
+  .footer-container .footer-item_text
+    font-size: 1.1em
+
+  .footer-container
+    flex-direction: column
+
+    .footer-item
+      flex-direction: row
+
+      .footer-item_glyph
+        margin-right: 30px
+
+    .footer-item_text
+      text-align: left
+

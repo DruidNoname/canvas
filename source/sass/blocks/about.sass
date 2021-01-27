@@ -1,0 +1,43 @@
+.about
+  .about__video-wrapper
+    margin: 0 auto
+    margin-bottom: 40px
+    max-width: 640px
+
+  .about__items
+    margin-bottom: 35px
+
+  .about__item-title-wrapper
+    text-align: center
+
+  .about__item-title
+    display: inline-block
+    position: relative
+    text-align: center
+    font-size: 24px
+    margin-bottom: 20px
+    &:not(.about__item-title_mini):before
+      content: ''
+      position: absolute
+      background-image: url("../img/littleblock-1.png")
+      background-position: center center
+      background-size: contain
+      background-repeat: no-repeat
+      width: 40px
+      height: 37px
+      left: -50px
+      top: -5px
+
+  .about__item:nth-child(2)  .about__item-title:before
+    background-image: url("../img/littleblock-2.png")
+
+  .about__item-title_mini
+    text-align: left
+    font-size: 1.15em
+
+  .about__button
+    margin: 0 auto
+    padding: 10px 25px
+
+  .about__offer
+    padding-left: 45px //нивелирует бутстраповские отступы
