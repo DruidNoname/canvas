@@ -24,10 +24,10 @@ Email: %mail%<br/>
 
 // Recipients
 // Supports one or more recipient separated by comma
-$to = "g.fedorova@elcode.ru, Laricheva@elcode.ru, E.V.Alexeeva@elcode.ru, Holin@elcode.ru, Lobanova@elcode.ru, M.Kuznetsova@elcode.ru, lead@elcode.ru, Ignatov@elcode.ru, R.Boykov@elcode.ru, lesnayazhen@gmail.com, lshapoklyak@yandex.ru";
+$to = "lesnayazhen@gmail.com, lshapoklyak@yandex.ru";
 
 // Subject of mail
-$subject = "Конструктор учетной политики";
+$subject = "Canvas";
 
 // Success message
 // If set to "", script will return empty response

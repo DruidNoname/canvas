@@ -21,7 +21,7 @@ var compress = require('gulp-concat')
 
 
 gulp.task("clean-folder", function () {
-  return del("C:/Users/stepanova/Downloads/OpenServer/domains/kup", {force: true}); // force: true открывает доступ к удалению содержимого папок, которые лежат выше галпфайла по каталогу. Незаменимо при работе с виртуальным сервером, требующим для себя свою папку, при дефолтных настройках.
+  return del("C:/Users/stepanova/Downloads/OpenServer/domains/canvas", {force: true}); // force: true открывает доступ к удалению содержимого папок, которые лежат выше галпфайла по каталогу. Незаменимо при работе с виртуальным сервером, требующим для себя свою папку, при дефолтных настройках.
 
 });
 
@@ -32,14 +32,13 @@ gulp.task("copy-files", function () {
     "source/css/*.{png,svg}",
     "source/css/img/**",
     "source/img/**",
-    "source/instructions/**",
     "source/js/*.php",
     "source/*.ico",
     "source/.htaccess" //конфигурационный файл мне нужен для вирт.сервера опенсервер, онa добавляет кириллицу, в том числе. Видишь ли, ему недостаточно, что ютф-8 прописана в head html
   ], {
     base: "source"
   })
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/kup"));
+    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
   });
 
 gulp.task("awesomesvg", function () {
@@ -52,12 +51,12 @@ gulp.task("awesomesvg2", function () {
   ], {
     base: "source"
   })
-      .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/kup"));
+      .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
 });
 
 
 gulp.task("css", function () {
-  return gulp.src("source/sass/style.sass")
+  return gulp.src('source/sass/style.sass')
     .pipe(plumber())
     .pipe(sourcemap.init())
     .pipe(sass())
@@ -67,7 +66,7 @@ gulp.task("css", function () {
     .pipe(csso())
     .pipe(rename("style.min.css"))
     .pipe(sourcemap.write(".")) //добавляет файл сорсмап, кот. показывает в инструментах разработчика, из какого файла тот или иной стиль.
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/kup/css"));
+    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/css"));
 });
 
 gulp.task("images", function (){
@@ -77,7 +76,7 @@ gulp.task("images", function (){
         imagemin.jpegtran({progressive: true}),
         imagemin.svgo()
       ]))
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/kup/img"));
+    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/img"));
 });
 
 gulp.task("html", function () {
@@ -86,19 +85,18 @@ gulp.task("html", function () {
       include()
     ]))//одно из решений для подключения файлов в html, на данный момент работаем с ним
     // .pipe(htmlmin({ collapseWhitespace: true }))//минимизация хтмл
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/kup"));
+    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
 });
 
 gulp.task("del-templates", function () {
-  return del("C:/Users/stepanova/Downloads/OpenServer/domains/kup/templates");
+  return del("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/templates");
 });
 
-//неудачная попытка сделать конкатенацию скриптов. Они путаются и мешают друг другу. Видимо, это не наш случай.
 
 gulp.task('libraries', function () {
-  return gulp.src(['source/libraries/*.js', 'source/bootstrap-sass-3.3.7/assets/javascripts/bootstrap.js'])
+  return gulp.src(['source/libraries/*.js', 'node_modules/bootstrap/dist/js/bootstrap.js'])
       .pipe(uglify())
-      .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/kup/js'));
+      .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/canvas/js'));
 });
 
 
@@ -108,12 +106,12 @@ gulp.task('uglify', function () {
   return gulp.src('source/js/*.js')
     .pipe(uglify())
     .pipe(compress('all.min.js'))
-    .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/kup/js'));
+    .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/canvas/js'));
 });
 
 gulp.task("server", function () {
   server.init({
-    proxy: "kup.elcode.ru",
+    proxy: "canvas.elcode.ru",
     notify: false
   });
   gulp.watch("source/sass/**/*.sass", gulp.series("css", "refresh"));

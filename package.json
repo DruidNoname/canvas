@@ -36,9 +36,11 @@
     "node": "12.x"
   },
   "dependencies": {
+    "bootstrap": "^4.6.0",
     "gulp-uglify": "^3.0.2",
     "imask": "^6.0.3",
     "mediaelement": "^4.2.16",
+    "pixi.js": "^5.3.7",
     "svgxuse": "^1.2.6"
   }
 }
