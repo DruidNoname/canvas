@@ -43,9 +43,11 @@
                 </div>
             </div>
 
-            <canvas id="myCanvas" style="width: 100%;"></canvas>
-
-
+<!--            для jcanvas width и height должны быть указаны через свойства width="" и height="" соответственно. Иначе фигуры растягиваются. Не понимаю, почему так.-->
+            <div class="canvas-container">
+            <canvas class="canvas-field" id="myCanvas" width="1170" height="850"></canvas>
+            <div id="corrector" class="corrector">абыр абыр абырвалг</div>
+            </div>
         </div>
     </section>
 
@@ -67,9 +69,9 @@
 <!--<script src="js/jquery.activity.min.js"></script>-->
 <script src="js/bootstrap.js"></script>
 <script src="js/lightbox.js"></script>
-<!--<script src="js/jCanvas.js"></script>-->
-<script src="js/pixi.min.js"></script>
-<script src="js/mediaelement-and-player.js"></script>
+<script src="js/jCanvas.js"></script>
+<!--<script src="js/pixi.min.js"></script>-->
+
 
 <script src="js/all.min.js" type="text/javascript"> </script>
 
