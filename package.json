@@ -5,6 +5,7 @@
   "description": "Лендинг по переходу на элеектронные трудовые книжки, Элкод",
   "devDependencies": {
     "autoprefixer": "9.5.x",
+    "bootstrap": "^4.6.0",
     "browser-sync": "^2.26.13",
     "del": "^5.1.0",
     "gulp": "4.0.x",
@@ -36,7 +37,6 @@
     "node": "12.x"
   },
   "dependencies": {
-    "bootstrap": "^4.6.0",
     "gulp-uglify": "^3.0.2",
     "imask": "^6.0.3",
     "mediaelement": "^4.2.16",

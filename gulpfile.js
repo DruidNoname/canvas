@@ -21,7 +21,7 @@ var compress = require('gulp-concat')
 
 
 gulp.task("clean-folder", function () {
-  return del("C:/Users/stepanova/Downloads/OpenServer/domains/canvas", {force: true}); // force: true открывает доступ к удалению содержимого папок, которые лежат выше галпфайла по каталогу. Незаменимо при работе с виртуальным сервером, требующим для себя свою папку, при дефолтных настройках.
+  return del("D:/program files/openserver/openserver/domains/canvas", {force: true}); // force: true открывает доступ к удалению содержимого папок, которые лежат выше галпфайла по каталогу. Незаменимо при работе с виртуальным сервером, требующим для себя свою папку, при дефолтных настройках.
 
 });
 
@@ -38,7 +38,7 @@ gulp.task("copy-files", function () {
   ], {
     base: "source"
   })
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
+    .pipe(gulp.dest("D:/program files/openserver/openserver/domains/canvas"));
   });
 
 gulp.task("awesomesvg", function () {
@@ -51,7 +51,7 @@ gulp.task("awesomesvg2", function () {
   ], {
     base: "source"
   })
-      .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
+      .pipe(gulp.dest("D:/program files/openserver/openserver/domains/canvas"));
 });
 
 
@@ -66,7 +66,7 @@ gulp.task("css", function () {
     .pipe(csso())
     .pipe(rename("style.min.css"))
     .pipe(sourcemap.write(".")) //добавляет файл сорсмап, кот. показывает в инструментах разработчика, из какого файла тот или иной стиль.
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/css"));
+    .pipe(gulp.dest("D:/program files/openserver/openserver/domains/canvas/css"));
 });
 
 gulp.task("images", function (){
@@ -76,7 +76,7 @@ gulp.task("images", function (){
         imagemin.jpegtran({progressive: true}),
         imagemin.svgo()
       ]))
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/img"));
+    .pipe(gulp.dest("D:/program files/openserver/openserver/domains/canvas/img"));
 });
 
 gulp.task("html", function () {
@@ -85,18 +85,18 @@ gulp.task("html", function () {
       include()
     ]))//одно из решений для подключения файлов в html, на данный момент работаем с ним
     // .pipe(htmlmin({ collapseWhitespace: true }))//минимизация хтмл
-    .pipe(gulp.dest("C:/Users/stepanova/Downloads/OpenServer/domains/canvas"));
+    .pipe(gulp.dest("D:/program files/openserver/openserver/domains/canvas"));
 });
 
 gulp.task("del-templates", function () {
-  return del("C:/Users/stepanova/Downloads/OpenServer/domains/canvas/templates");
+  return del("D:/program files/openserver/openserver/domains/canvas/templates");
 });
 
 
 gulp.task('libraries', function () {
   return gulp.src(['source/libraries/*.js', 'node_modules/bootstrap/dist/js/bootstrap.js'])
       .pipe(uglify())
-      .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/canvas/js'));
+      .pipe(gulp.dest('D:/program files/openserver/openserver/domains/canvas/js'));
 });
 
 
@@ -106,7 +106,7 @@ gulp.task('uglify', function () {
   return gulp.src('source/js/*.js')
     .pipe(uglify())
     .pipe(compress('all.min.js'))
-    .pipe(gulp.dest('C:/Users/stepanova/Downloads/OpenServer/domains/canvas/js'));
+    .pipe(gulp.dest('D:/program files/openserver/openserver/domains/canvas/js'));
 });
 
 gulp.task("server", function () {

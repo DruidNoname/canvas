@@ -13,7 +13,7 @@ function card(layer, cluster, coordsX, coordsY, cardWidth, cardHeight){
         dragGroups: [cluster],
         strokeStyle: 'steelblue',
         x: coordsX, y: coordsY,
-        width: cardWidth, height: cardHeight
+        width: cardWidth, height: cardHeight,
     })
 }
 
@@ -56,16 +56,13 @@ function setCardDefaultOptions(cardGroup){
         },
 
         dragstart: function() {
-            $('canvas').removeLayer(nameArrowLayer('cardLayer1', 'cardLayer2'));
-            // code to run as layer is being dragged
+            $(this).removeLayerGroup('arrowSystem')
         },
 
         dragstop: function() {
-            // code to run when dragging stops
-            arrow('cardLayer1', 'cardLayer2','cardGroup4');
+            buildArrowSystem()
         },
-    })
-        .drawLayers();
+    }).drawLayers();
 
 }
 
@@ -74,43 +71,75 @@ function setCardDefaultOptions(cardGroup){
 
 // *---*----*--DRAWING CONNECTING ARROW--*----*-----
 
+// function gettingCoordsParams(layerFrom, layerTo){
+//     var rectFrom = $('canvas').getLayer(layerFrom);
+//     var rectTo = $('canvas').getLayer(layerTo);
+//     var rectFromWidth = rectFrom.width;
+//     var rectToWidth = rectTo.width;
+//     var xFrom = rectFrom.x;
+//     var xTo = rectTo.x;
+//     var yFrom = rectFrom.y;
+//     var yTo = rectTo.y;
+//     return [rectFrom,
+//         rectTo,
+//         rectFromWidth,
+//         rectToWidth,
+//         xFrom,
+//         xTo,
+//         yFrom,
+//         yTo];
+// }
 
-function gettingBX(layer){
-    var rect = $('canvas').getLayer(layer);
+
+//ЗАДАНИЕ НА ПОНЕДЕЛЬНИК: ПОНЯТЬ, ПОЧЕМУ МАССИВ СУКА НЕ ВЫЗЫВАЕТСЯ ФУНКЦИЕЙ КУДА НАДО
+
+
+// function gettingBX(layerFrom, layerTo){
+//     gettingCoordsParams(layerFrom, layerTo);
+//     if (xFrom < xTo) {
+//         x = x + rectWidth + 7;
+//     }  else {
+//
+//     }
+// }
+
+function gettingBX(layerFrom){
+    var rect = $('canvas').getLayer(layerFrom);
     var x = rect.x;
     var rectWidth = rect.width;
-    return x + rectWidth;
+    return x + rectWidth + 7;
 }
 
-function gettingBY(layer){
-    var rect = $('canvas').getLayer(layer);
+
+function gettingBY(layerFrom){
+    var rect = $('canvas').getLayer(layerFrom);
     var y = rect.y;
     var rectHeight = rect.height;
     return y + rectHeight/2;
-
 }
 
-function gettingEX(layer){
-    var rect = $('canvas').getLayer(layer);
+function gettingEX(layerTo){
+    var rect = $('canvas').getLayer(layerTo);
     var x = rect.x;
-    return x;
-
+    return x - 7;
 }
 
-function gettingEY(layer){
-    var rect = $('canvas').getLayer(layer);
+function gettingEY(layerTo){
+    var rect = $('canvas').getLayer(layerTo);
     var y = rect.y;
     var rectHeight = rect.height;
     return y + rectHeight/2;
 }
 
-function arrow(layerFrom, layerTo, cluster) {
+function arrow(layerFrom, layerTo) {
     $('canvas').drawLine({
         name: nameArrowLayer(layerFrom, layerTo),
-        groups: [cluster],
-        dragGroups: [cluster],
+        groups: ['arrowSystem'],
         strokeStyle: '#000',
         strokeWidth: 2,
+        endArrow: true,
+        arrowRadius: 11,
+        arrowAngle: 50,
         rounded: true,
         x1: gettingBX(layerFrom),
         y1: gettingBY(layerFrom),
@@ -126,6 +155,10 @@ function nameArrowLayer(layerFrom, layerTo) {
     return arrowLayer;
 }
 
+function buildArrowSystem(){
+    arrow('cardLayer1', 'cardLayer2');
+    arrow('cardLayer3', 'cardLayer4');
+}
 
 // *---*----*--DRAWING CONNECTING ARROW END--*----*-----
 
@@ -134,12 +167,11 @@ drawWholeCardPrimary(1, 50, 100, 'Hello world');
 
 drawWholeCardPrimary(2, 360, 100, 'How are you buddy? D\'you like ice-cream?');
 
-
-arrow('cardLayer1', 'cardLayer2','cardGroup4');
-
-
 drawWholeCardPrimary(3, 50, 460, 'Hello there');
 
+drawWholeCardPrimary(4, 360, 460, 'General Kenobi!');
+
+buildArrowSystem();
 
 // *---*----*--DRAWING THE WHOLE CANVAS STRUCTURE END--*----*-----
 
@@ -163,7 +195,11 @@ drawWholeCardPrimary(3, 50, 460, 'Hello there');
 // *---*----*--NON-CANVAS TOOLS SWITCHERS--*----*-----
 
 $('#drag-switcher').click(function(){
+    $('#corrector').addClass('d-none');
     $('canvas').setLayers({
+        click: function(){
+            return false
+        },
         draggable: true,
         cursors: {
             mouseover: 'grab',
@@ -171,40 +207,37 @@ $('#drag-switcher').click(function(){
             mouseup: 'grab'
         }
     }).drawLayers();
+
     console.log('draggable');
 });
 
 //переключатель редактора текста не работает, и как его настроить - хз
 
 $('#write-switcher').click(function(){
-    $('canvas').setLayers( [/cardLayer/gi, /textLayer/gi], {
-        click: function () {
-            var cardGroupElems = $('canvas').getLayerGroup(/cardGroup/gi);
-            $.each(cardGroupElems, function (j) {
-                if (cardGroupElems[j].text != '') {
-                    var usedText = cardGroupElems[j].text;
-                    console.log(usedText);
-                    var victim = $("#corrector");
-                    victim.html(usedText);
-                    victim.attr({
-                        contenteditable: true
-                    });
-                }
-            })
-        }
-    }, function(layerGroup) {
-        return (layerGroup.name === /cardGroup/gi);
-    }).drawLayers();
-
-    $('canvas').setLayers({
-        draggable: false,
-        cursors: {
-            mouseover: 'text'
-        }
-    }).drawLayers();
+    for (var i = 1; i < 5; ++i) {
+        var groupName = 'cardGroup' + i;
+        $('canvas').setLayerGroup(groupName, {
+            click: function (layer){
+                // Click a star to spin it
+                var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
+                var textLayer = $(this).getLayer("textLayer" + index);
+                var usedText = textLayer.text;
+                console.log(usedText);
+                var victim = $("#corrector");
+                victim.removeClass('d-none');
+                victim.html(usedText);
+                victim.attr({
+                    contenteditable: true
+                });
+            },
+            draggable: false,
+            cursors: {
+                mouseover: 'text'
+            }
+        }).drawLayers();
+    }
     console.log('rewritable');
 });
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS END--*----*-----
-
