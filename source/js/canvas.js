@@ -71,51 +71,55 @@ function setCardDefaultOptions(cardGroup){
 
 // *---*----*--DRAWING CONNECTING ARROW--*----*-----
 
-// function gettingCoordsParams(layerFrom, layerTo){
-//     var rectFrom = $('canvas').getLayer(layerFrom);
-//     var rectTo = $('canvas').getLayer(layerTo);
-//     var rectFromWidth = rectFrom.width;
-//     var rectToWidth = rectTo.width;
-//     var xFrom = rectFrom.x;
-//     var xTo = rectTo.x;
-//     var yFrom = rectFrom.y;
-//     var yTo = rectTo.y;
-//     return [rectFrom,
-//         rectTo,
-//         rectFromWidth,
-//         rectToWidth,
-//         xFrom,
-//         xTo,
-//         yFrom,
-//         yTo];
-// }
-
-
-//ЗАДАНИЕ НА ПОНЕДЕЛЬНИК: ПОНЯТЬ, ПОЧЕМУ МАССИВ СУКА НЕ ВЫЗЫВАЕТСЯ ФУНКЦИЕЙ КУДА НАДО
-
-
-// function gettingBX(layerFrom, layerTo){
-//     gettingCoordsParams(layerFrom, layerTo);
-//     if (xFrom < xTo) {
-//         x = x + rectWidth + 7;
-//     }  else {
-//
-//     }
-// }
-
-function gettingBX(layerFrom){
-    var rect = $('canvas').getLayer(layerFrom);
-    var x = rect.x;
-    var rectWidth = rect.width;
-    return x + rectWidth + 7;
+function gettingCoordsParams(layerFrom, layerTo){
+    var rectFrom = $('canvas').getLayer(layerFrom);
+    var rectTo = $('canvas').getLayer(layerTo);
+    var getCoordsParams = new Object();
+        getCoordsParams.rectFromWidth = rectFrom.width;
+        getCoordsParams.rectToWidth = rectTo.width;
+        getCoordsParams.rectFromHeight = rectFrom.height;
+        getCoordsParams.rectToHeight = rectTo.height;
+        getCoordsParams.xFrom = rectFrom.x;
+        getCoordsParams.xTo = rectTo.x;
+        getCoordsParams.yFrom = rectFrom.y;
+        getCoordsParams.yTo = rectTo.y;
+        getCoordsParams.gap = 5; //этот параметр нужен, чтобы стрелка не втыкалась вплотную в рамку
+ return getCoordsParams;
 }
 
 
-function gettingBY(layerFrom){
-    var rect = $('canvas').getLayer(layerFrom);
-    var y = rect.y;
-    var rectHeight = rect.height;
-    return y + rectHeight/2;
+//ВОПРОС: КАК УБРАТЬ ХРУПКУЮ СИСТЕМУ С ЭЛЕМЕНТАМИ МАССИВА ПО ИНДЕКСУ - ИСПОЛЬЗУЕМ ОБЪЕКТ
+
+
+function gettingBX(layerFrom, layerTo){
+    var coordsParams = gettingCoordsParams(layerFrom, layerTo);
+
+    if (coordsParams.xFrom + coordsParams.rectFromWidth < coordsParams.xTo) {
+        var x = coordsParams.xFrom + coordsParams.rectFromWidth + coordsParams.gap;
+
+    }  else if (coordsParams.xFrom + coordsParams.rectFromWidth/2 < coordsParams.xTo) {
+        x = coordsParams.xFrom + coordsParams.rectFromWidth/2;
+
+    }  else {
+        x = coordsParams.xFrom - coordsParams.gap;
+    }
+    return x;
+}
+
+function gettingBY(layerFrom, layerTo){
+    var coordsParams = gettingCoordsParams(layerFrom, layerTo);
+
+    if (coordsParams.yFrom > coordsParams.yTo + coordsParams.rectToHeight) {
+        var y = coordsParams.yFrom - coordsParams.gap;
+
+    }  else if (coordsParams.yFrom + coordsParams.rectFromHeight < coordsParams.yTo) {
+
+        y = coordsParams.yFrom + coordsParams.rectFromHeight;
+
+    }  else {
+        y = coordsParams.yFrom + coordsParams.rectFromHeight/2;
+    }
+    return y;
 }
 
 function gettingEX(layerTo){
@@ -141,8 +145,8 @@ function arrow(layerFrom, layerTo) {
         arrowRadius: 11,
         arrowAngle: 50,
         rounded: true,
-        x1: gettingBX(layerFrom),
-        y1: gettingBY(layerFrom),
+        x1: gettingBX(layerFrom, layerTo),
+        y1: gettingBY(layerFrom, layerTo),
         x2: gettingEX(layerTo),
         y2: gettingEY(layerTo)
     })
