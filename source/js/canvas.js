@@ -97,7 +97,7 @@ function gettingBX(layerFrom, layerTo){
     if (coordsParams.xFrom + coordsParams.rectFromWidth < coordsParams.xTo) {
         var x = coordsParams.xFrom + coordsParams.rectFromWidth + coordsParams.gap;
 
-    }  else if (coordsParams.xFrom + coordsParams.rectFromWidth/2 < coordsParams.xTo) {
+    }  else if (coordsParams.xFrom < coordsParams.xTo + coordsParams.rectFromWidth) {
         x = coordsParams.xFrom + coordsParams.rectFromWidth/2;
 
     }  else {
@@ -114,7 +114,7 @@ function gettingBY(layerFrom, layerTo){
 
     }  else if (coordsParams.yFrom + coordsParams.rectFromHeight < coordsParams.yTo) {
 
-        y = coordsParams.yFrom + coordsParams.rectFromHeight;
+        y = coordsParams.yFrom + coordsParams.rectFromHeight + coordsParams.gap;
 
     }  else {
         y = coordsParams.yFrom + coordsParams.rectFromHeight/2;
@@ -122,17 +122,35 @@ function gettingBY(layerFrom, layerTo){
     return y;
 }
 
-function gettingEX(layerTo){
-    var rect = $('canvas').getLayer(layerTo);
-    var x = rect.x;
-    return x - 7;
+function gettingEX(layerFrom, layerTo){
+    var coordsParams = gettingCoordsParams(layerFrom, layerTo);
+
+    if (coordsParams.xTo + coordsParams.rectToWidth < coordsParams.xFrom) {
+        var x = coordsParams.xTo + coordsParams.rectToWidth + coordsParams.gap;
+
+    }  else if (coordsParams.xTo < coordsParams.xFrom + coordsParams.rectFromWidth) {
+        x = coordsParams.xTo + coordsParams.rectToWidth/2;
+
+    }  else {
+        x = coordsParams.xTo - coordsParams.gap;
+    }
+    return x;
 }
 
-function gettingEY(layerTo){
-    var rect = $('canvas').getLayer(layerTo);
-    var y = rect.y;
-    var rectHeight = rect.height;
-    return y + rectHeight/2;
+function gettingEY(layerFrom, layerTo){
+    var coordsParams = gettingCoordsParams(layerFrom, layerTo);
+
+    if (coordsParams.yTo > coordsParams.yFrom + coordsParams.rectFromHeight) {
+        var y = coordsParams.yTo - coordsParams.gap;
+
+    }  else if (coordsParams.yTo + coordsParams.rectToHeight < coordsParams.yFrom) {
+
+        y = coordsParams.yTo + coordsParams.rectToHeight;
+
+    }  else {
+        y = coordsParams.yTo + coordsParams.rectToHeight/2;
+    }
+    return y;
 }
 
 function arrow(layerFrom, layerTo) {
@@ -147,16 +165,15 @@ function arrow(layerFrom, layerTo) {
         rounded: true,
         x1: gettingBX(layerFrom, layerTo),
         y1: gettingBY(layerFrom, layerTo),
-        x2: gettingEX(layerTo),
-        y2: gettingEY(layerTo)
+        x2: gettingEX(layerFrom, layerTo),
+        y2: gettingEY(layerFrom, layerTo)
     })
 }
 
 function nameArrowLayer(layerFrom, layerTo) {
     var cypherFrom = (layerFrom).replace(/\D+/g,"");
     var cypherTo = (layerTo).replace(/\D+/g,"");
-    var arrowLayer = 'arrowFrom' + cypherFrom + 'To' + cypherTo;
-    return arrowLayer;
+    return 'arrowFrom' + cypherFrom + 'To' + cypherTo;
 }
 
 function buildArrowSystem(){
