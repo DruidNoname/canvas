@@ -1,7 +1,9 @@
 $.extend($.jCanvas.defaults, {
     fromCenter: false,
-    draggable: true,
-    layer: true
+    //entering default for drawing
+    // draggable: true,
+    draggable: false,
+    layer: true,
 });
 
 // *---*----*--DRAWING PRIMARY CARD--*----*-----
@@ -10,7 +12,7 @@ function card(layer, cluster, coordsX, coordsY, cardWidth, cardHeight){
     $('canvas').drawRect({
         name: layer,
         groups: [cluster],
-        dragGroups: [cluster],
+        // dragGroups: [cluster],
         strokeStyle: 'steelblue',
         x: coordsX, y: coordsY,
         width: cardWidth, height: cardHeight,
@@ -21,7 +23,7 @@ function cardContent(layer, cluster, textCoordsX, textCoordsY, textWidth, conten
     $('canvas').drawText({
         name: layer,
         groups: [cluster],
-        dragGroups: [cluster],
+        // dragGroups: [cluster],
         strokeStyle: 'steelblue',
         x: textCoordsX, y: textCoordsY,
         fillStyle: '#9cf',
@@ -75,16 +77,16 @@ function gettingCoordsParams(layerFrom, layerTo){
     var rectFrom = $('canvas').getLayer(layerFrom);
     var rectTo = $('canvas').getLayer(layerTo);
     var getCoordsParams = new Object();
-        getCoordsParams.rectFromWidth = rectFrom.width;
-        getCoordsParams.rectToWidth = rectTo.width;
-        getCoordsParams.rectFromHeight = rectFrom.height;
-        getCoordsParams.rectToHeight = rectTo.height;
-        getCoordsParams.xFrom = rectFrom.x;
-        getCoordsParams.xTo = rectTo.x;
-        getCoordsParams.yFrom = rectFrom.y;
-        getCoordsParams.yTo = rectTo.y;
-        getCoordsParams.gap = 5; //этот параметр нужен, чтобы стрелка не втыкалась вплотную в рамку
- return getCoordsParams;
+    getCoordsParams.rectFromWidth = rectFrom.width;
+    getCoordsParams.rectToWidth = rectTo.width;
+    getCoordsParams.rectFromHeight = rectFrom.height;
+    getCoordsParams.rectToHeight = rectTo.height;
+    getCoordsParams.xFrom = rectFrom.x;
+    getCoordsParams.xTo = rectTo.x;
+    getCoordsParams.yFrom = rectFrom.y;
+    getCoordsParams.yTo = rectTo.y;
+    getCoordsParams.gap = 5; //этот параметр нужен, чтобы стрелка не втыкалась вплотную в рамку
+    return getCoordsParams;
 }
 
 
@@ -171,9 +173,9 @@ function arrow(layerFrom, layerTo) {
 }
 
 function nameArrowLayer(layerFrom, layerTo) {
-    var cypherFrom = (layerFrom).replace(/\D+/g,"");
-    var cypherTo = (layerTo).replace(/\D+/g,"");
-    return 'arrowFrom' + cypherFrom + 'To' + cypherTo;
+    var cipherFrom = (layerFrom).replace(/\D+/g,"");
+    var cipherTo = (layerTo).replace(/\D+/g,"");
+    return 'arrowFrom' + cipherFrom + 'To' + cipherTo;
 }
 
 function buildArrowSystem(){
@@ -199,66 +201,94 @@ buildArrowSystem();
 
 
 // *---*----*--CANVAS MOUSE EVENTS--*----*-----
-// function myFunc(){
-//     console.log('Hello there!');
-//     var group = canvas.getLayerGroup(this);
-//     console.log(group[1].text);
-// }
 
+// $('canvas').draw({
+//     mousedown: function (ctx, e) {
+//         var isDrawing = $.jCanvas.defaults.isDrawing;
+//         isDrawing = true;
+//         ctx.beginPath();
+//         ctx.moveTo(e.pageX - $(this).offsetLeft, e.pageY - $(this).offsetTop);
+//         console.log(isDrawing);
+//         return isDrawing;
+//     },
+//     mousemove: function (ctx, e) {
+//         if (isDrawing === true) {
+//             var x = e.pageX - $(this).offsetLeft;
+//             var y = e.pageY - $(this).offsetTop;
+//             ctx.lineTo(x, y);
+//             ctx.stroke();
+//         }
+//     },
+//     mouseup: function () {
+//         isDrawing = false;
+//         console.log(isDrawing);
+//         return isDrawing;
+//     }
+// });
 
 // *---*----*--CANVAS MOUSE EVENTS END--*----*-----
 
 
-
+$('canvas').draw({
+    fn: function (ctx, e) {
+        var x = e.pageX - $(this).offsetLeft;
+        var y = e.pageY - $(this).offsetTop;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+});
 
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS--*----*-----
-
-$('#drag-switcher').click(function(){
-    $('#corrector').addClass('d-none');
-    $('canvas').setLayers({
-        click: function(){
-            return false
-        },
-        draggable: true,
-        cursors: {
-            mouseover: 'grab',
-            mousedown: 'grabbing',
-            mouseup: 'grab'
-        }
-    }).drawLayers();
-
-    console.log('draggable');
-});
-
-//переключатель редактора текста не работает, и как его настроить - хз
-
-$('#write-switcher').click(function(){
-    for (var i = 1; i < 5; ++i) {
-        var groupName = 'cardGroup' + i;
-        $('canvas').setLayerGroup(groupName, {
-            click: function (layer){
-                // Click a star to spin it
-                var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
-                var textLayer = $(this).getLayer("textLayer" + index);
-                var usedText = textLayer.text;
-                console.log(usedText);
-                var victim = $("#corrector");
-                victim.removeClass('d-none');
-                victim.html(usedText);
-                victim.attr({
-                    contenteditable: true
-                });
-            },
-            draggable: false,
-            cursors: {
-                mouseover: 'text'
-            }
-        }).drawLayers();
-    }
-    console.log('rewritable');
-});
+//
+// $('#drag-switcher').click(function(){
+//     $('canvas').unbind();
+//     $('#corrector').addClass('d-none');
+//     $('canvas').setLayers({
+//         click: function(){
+//             return false
+//         },
+//         draggable: true,
+//         cursors: {
+//             mouseover: 'grab',
+//             mousedown: 'grabbing',
+//             mouseup: 'grab'
+//         }
+//     }).drawLayers();
+//
+//     console.log('draggable');
+// });
+//
+// //переключатель редактора текста не работает, и как его настроить - хз
+//
+// $('#write-switcher').click(function(){
+//     for (var i = 1; i < 5; ++i) {
+//         var groupName = 'cardGroup' + i;
+//         $('canvas').setLayerGroup(groupName, {
+//             click: function (layer){
+//                 // Click a star to spin it
+//                 var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
+//                 var textLayer = $(this).getLayer("textLayer" + index);
+//                 var usedText = textLayer.text;
+//                 console.log(usedText);
+//                 var victim = $("#corrector");
+//                 victim.removeClass('d-none');
+//                 victim.html(usedText);
+//                 victim.attr({
+//                     contenteditable: true
+//                 });
+//             },
+//             draggable: false,
+//             cursors: {
+//                 mouseover: 'text'
+//             }
+//         }).drawLayers();
+//     }
+//     console.log('rewritable');
+// });
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS END--*----*-----
