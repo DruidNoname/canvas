@@ -254,27 +254,28 @@ $('#write-switcher').click(function(){
 // //переключатель выделения маркером
 
 $('#draw-switcher').click(function(){
-    for (var i = 1; i < 5; ++i) {
-        var groupName = 'cardGroup' + i;
-        $('canvas').setLayerGroup(groupName, {
-            click: function (layer){
-                    var startX = event.clientX;
-                    var startY = event.clientY;
-                    $(this).drawArc({
-                        fillStyle: 'yellow',
-                        x: startX,
-                        y: startY,
-                        radius: (20),
-                        start: 0,
-                        end: 360
-                    });
-            },
-            draggable: false,
-            cursors: {
-                mouseover: 'crosshair'
-            }
-        }).drawLayers();
-    }
+    $('canvas').setLayers({
+        click: function (layer){
+            var startX = event.clientX;
+            var startY = event.clientY;
+            var groupName = layer.dragGroups;
+            console.log(groupName);
+            $(this).drawArc({
+                fillStyle: 'yellow',
+                groups: [groupName],
+                dragGroups: [groupName],
+                x: startX,
+                y: startY,
+                radius: (20),
+                start: 0,
+                end: 360
+            });
+        },
+        draggable: false,
+        cursors: {
+            mouseover: 'crosshair'
+        }
+    }).drawLayers();
     console.log('paintable');
 });
 
