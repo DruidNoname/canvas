@@ -1,8 +1,6 @@
 $.extend($.jCanvas.defaults, {
     fromCenter: false,
-    //entering default for drawing
-    // draggable: true,
-    draggable: false,
+    draggable: true,
     layer: true,
 });
 
@@ -12,7 +10,7 @@ function card(layer, cluster, coordsX, coordsY, cardWidth, cardHeight){
     $('canvas').drawRect({
         name: layer,
         groups: [cluster],
-        // dragGroups: [cluster],
+        dragGroups: [cluster],
         strokeStyle: 'steelblue',
         x: coordsX, y: coordsY,
         width: cardWidth, height: cardHeight,
@@ -23,7 +21,7 @@ function cardContent(layer, cluster, textCoordsX, textCoordsY, textWidth, conten
     $('canvas').drawText({
         name: layer,
         groups: [cluster],
-        // dragGroups: [cluster],
+        dragGroups: [cluster],
         strokeStyle: 'steelblue',
         x: textCoordsX, y: textCoordsY,
         fillStyle: '#9cf',
@@ -202,93 +200,83 @@ buildArrowSystem();
 
 // *---*----*--CANVAS MOUSE EVENTS--*----*-----
 
-// $('canvas').draw({
-//     mousedown: function (ctx, e) {
-//         var isDrawing = $.jCanvas.defaults.isDrawing;
-//         isDrawing = true;
-//         ctx.beginPath();
-//         ctx.moveTo(e.pageX - $(this).offsetLeft, e.pageY - $(this).offsetTop);
-//         console.log(isDrawing);
-//         return isDrawing;
-//     },
-//     mousemove: function (ctx, e) {
-//         if (isDrawing === true) {
-//             var x = e.pageX - $(this).offsetLeft;
-//             var y = e.pageY - $(this).offsetTop;
-//             ctx.lineTo(x, y);
-//             ctx.stroke();
-//         }
-//     },
-//     mouseup: function () {
-//         isDrawing = false;
-//         console.log(isDrawing);
-//         return isDrawing;
-//     }
-// });
-
 // *---*----*--CANVAS MOUSE EVENTS END--*----*-----
-
-
-$('canvas').draw({
-    fn: function (ctx, e) {
-        var x = e.pageX - $(this).offsetLeft;
-        var y = e.pageY - $(this).offsetTop;
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-    }
-});
 
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS--*----*-----
 //
-// $('#drag-switcher').click(function(){
-//     $('canvas').unbind();
-//     $('#corrector').addClass('d-none');
-//     $('canvas').setLayers({
-//         click: function(){
-//             return false
-//         },
-//         draggable: true,
-//         cursors: {
-//             mouseover: 'grab',
-//             mousedown: 'grabbing',
-//             mouseup: 'grab'
-//         }
-//     }).drawLayers();
+$('#drag-switcher').click(function(){
+    $('#corrector').addClass('d-none');
+    $('canvas').setLayers({
+        click: function(){
+            return false
+        },
+        draggable: true,
+        cursors: {
+            mouseover: 'grab',
+            mousedown: 'grabbing',
+            mouseup: 'grab'
+        }
+    }).drawLayers();
+
+    console.log('draggable');
+});
 //
-//     console.log('draggable');
-// });
+// //переключатель редактора текста работает, надо настроить
 //
-// //переключатель редактора текста не работает, и как его настроить - хз
-//
-// $('#write-switcher').click(function(){
-//     for (var i = 1; i < 5; ++i) {
-//         var groupName = 'cardGroup' + i;
-//         $('canvas').setLayerGroup(groupName, {
-//             click: function (layer){
-//                 // Click a star to spin it
-//                 var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
-//                 var textLayer = $(this).getLayer("textLayer" + index);
-//                 var usedText = textLayer.text;
-//                 console.log(usedText);
-//                 var victim = $("#corrector");
-//                 victim.removeClass('d-none');
-//                 victim.html(usedText);
-//                 victim.attr({
-//                     contenteditable: true
-//                 });
-//             },
-//             draggable: false,
-//             cursors: {
-//                 mouseover: 'text'
-//             }
-//         }).drawLayers();
-//     }
-//     console.log('rewritable');
-// });
+$('#write-switcher').click(function(){
+    for (var i = 1; i < 5; ++i) {
+        var groupName = 'cardGroup' + i;
+        $('canvas').setLayerGroup(groupName, {
+            click: function (layer){
+                var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
+                var textLayer = $(this).getLayer("textLayer" + index);
+                var usedText = textLayer.text;
+                console.log(usedText);
+                var victim = $("#corrector");
+                victim.removeClass('d-none');
+                victim.html(usedText);
+                victim.attr({
+                    contenteditable: true
+                });
+            },
+            draggable: false,
+            cursors: {
+                mouseover: 'text'
+            }
+        }).drawLayers();
+    }
+    console.log('rewritable');
+});
+
+
+// //переключатель выделения маркером
+
+$('#draw-switcher').click(function(){
+    for (var i = 1; i < 5; ++i) {
+        var groupName = 'cardGroup' + i;
+        $('canvas').setLayerGroup(groupName, {
+            click: function (layer){
+                    var startX = event.clientX;
+                    var startY = event.clientY;
+                    $(this).drawArc({
+                        fillStyle: 'yellow',
+                        x: startX,
+                        y: startY,
+                        radius: (20),
+                        start: 0,
+                        end: 360
+                    });
+            },
+            draggable: false,
+            cursors: {
+                mouseover: 'crosshair'
+            }
+        }).drawLayers();
+    }
+    console.log('paintable');
+});
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS END--*----*-----

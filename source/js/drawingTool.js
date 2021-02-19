@@ -69,18 +69,18 @@
 //         painter.getTouchEventName = getTouchEventName;
 //
 //         function getPageCoords(event) {
-//             if (event.originalEvent.changedTouches) {
-//                 return {
-//                     pageX: event.originalEvent.changedTouches[0].pageX,
-//                     pageY: event.originalEvent.changedTouches[0].pageY
-//                 };
-//             } else {
-//                 return {
-//                     pageX: event.pageX,
-//                     pageY: event.pageY
-//                 };
-//             }
-//         }
+//     if (event.originalEvent.changedTouches) {
+//         return {
+//             pageX: event.originalEvent.changedTouches[0].pageX,
+//             pageY: event.originalEvent.changedTouches[0].pageY
+//         };
+//     } else {
+//         return {
+//             pageX: event.pageX,
+//             pageY: event.pageY
+//         };
+//     }
+// }
 //
 //         painter.getPageCoords = getPageCoords;
 //
