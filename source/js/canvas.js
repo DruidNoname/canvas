@@ -252,16 +252,18 @@ $('#write-switcher').click(function(){
 
 
 // //переключатель выделения маркером
+//nb должно быть условие, что если слоя нет - элемент рисуется отдельно.
 
 $('#draw-switcher').click(function(){
     $('canvas').setLayers({
         click: function (layer){
-            var startX = event.clientX;
-            var startY = event.clientY;
+            var bounding = $(this)[0].getBoundingClientRect();
+            var startX = event.clientX - bounding.left - 20;
+            var startY = event.clientY - bounding.top - 20;
             var groupName = layer.dragGroups;
             console.log(groupName);
             $(this).drawArc({
-                fillStyle: 'yellow',
+                fillStyle: 'rgba(200,185,0,0.5)',
                 groups: [groupName],
                 dragGroups: [groupName],
                 x: startX,
