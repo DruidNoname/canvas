@@ -208,8 +208,8 @@ buildArrowSystem();
 //
 $('#drag-switcher').click(function(){
     $('#corrector').addClass('d-none');
-    $('canvas').setLayers({
-        click: function(){
+        $('canvas').setLayers({
+        mousedown: function(){
             return false
         },
         draggable: true,
@@ -256,23 +256,66 @@ $('#write-switcher').click(function(){
 
 $('#draw-switcher').click(function(){
     $('canvas').setLayers({
-        click: function (layer){
-            var bounding = $(this)[0].getBoundingClientRect();
-            var startX = event.clientX - bounding.left - 20;
-            var startY = event.clientY - bounding.top - 20;
+        mousedown: function (layer){
+            var radius = 6;
+            var unknownCoefficient = 2.5;
             var groupName = layer.dragGroups;
-            console.log(groupName);
+            var bounding = $(this)[0].getBoundingClientRect();
+            var startX = event.clientX - bounding.left - radius - unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
+            var startY = event.clientY - bounding.top - radius - unknownCoefficient;
+            console.log(groupName.brushDrag);
             $(this).drawArc({
-                fillStyle: 'rgba(200,185,0,0.5)',
+                fillStyle: 'rgba(255,240,0,0.37)',
                 groups: [groupName],
                 dragGroups: [groupName],
+                draggable: false,
                 x: startX,
                 y: startY,
-                radius: (20),
+                radius: radius,
                 start: 0,
-                end: 360
+                end: 360,
+                brushDrag: true,
             });
+            $(this).setLayers({
+                brushDrag: true
+            });
+            event.preventDefault();
         },
+        mousemove: function (layer) {
+            if (layer.brushDrag === true) {
+                var radius = 6;
+                var unknownCoefficient = 2.5;
+                var bounding = $(this)[0].getBoundingClientRect();
+                var startX = event.pageX - bounding.left; //почему такая цифра, если радиус 20?
+                var startY = event.pageY - bounding.top;
+                var endX = startX;
+                var endY = startY;
+                groupName = layer.dragGroups;
+
+                $(this).drawLine({
+                    groups: [groupName],
+                    dragGroups: [groupName],
+                    draggable: false,
+                    strokeWidth: radius*2,
+                    strokeStyle: 'rgba(255,240,0,0.37)',
+                    strokeCap: 'round',
+                    strokeJoin: 'round',
+                    x1: startX, y1: startY,
+                    x2: endX, y2: endY,
+                    brushDrag: true,
+                });
+                    event.preventDefault();
+            }
+        },
+
+        mouseup: function (layer){
+            $(this).setLayers({
+                brushDrag: false
+            });
+            console.log(layer.brushDrag);
+            event.preventDefault();
+        },
+
         draggable: false,
         cursors: {
             mouseover: 'crosshair'
