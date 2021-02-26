@@ -250,6 +250,9 @@ $('#write-switcher').click(function(){
     console.log('rewritable');
 });
 
+var startX, startY, endX, endY, brushDrag;
+// var lineColor = 'rgba(255,240,0,0.37)';
+var lineColor = 'rgb(255,240,0)'
 
 // //переключатель выделения маркером
 //nb должно быть условие, что если слоя нет - элемент рисуется отдельно.
@@ -257,64 +260,76 @@ $('#write-switcher').click(function(){
 $('#draw-switcher').click(function(){
     $('canvas').setLayers({
         mousedown: function (layer){
-            var radius = 6;
+            brushDrag = true;
+            var radius = 9;
             var unknownCoefficient = 2.5;
             var groupName = layer.dragGroups;
             var bounding = $(this)[0].getBoundingClientRect();
-            var startX = event.clientX - bounding.left - radius - unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
-            var startY = event.clientY - bounding.top - radius - unknownCoefficient;
-            console.log(groupName.brushDrag);
+            startX = event.clientX - bounding.left - radius - unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
+            startY = event.clientY - bounding.top - radius - unknownCoefficient;
+            endX = startX;
+            endY = startY;
+            console.log(brushDrag);
             $(this).drawArc({
-                fillStyle: 'rgba(255,240,0,0.37)',
-                groups: [groupName],
+                fillStyle: lineColor,
+                groups: ['obvodka'],
                 dragGroups: [groupName],
                 draggable: false,
+                intangible: true,
                 x: startX,
                 y: startY,
                 radius: radius,
                 start: 0,
                 end: 360,
-                brushDrag: true,
-            });
-            $(this).setLayers({
-                brushDrag: true
             });
             event.preventDefault();
         },
+
+        //надо добавлять рисунок и выводить рисунок, а потом его делать прозрачным
+
+        mouseup: function (){
+            brushDrag = false;
+            console.log(brushDrag);
+            // $('canvas').setLayerGroup('obvodka', {
+            //     // opacity: 0.3
+            // });
+            event.preventDefault();
+        },
+
+        mouseover: function (){
+            brushDrag = false;
+            console.log(brushDrag);
+            event.preventDefault();
+        },
+
+
         mousemove: function (layer) {
-            if (layer.brushDrag === true) {
-                var radius = 6;
-                var unknownCoefficient = 2.5;
-                var bounding = $(this)[0].getBoundingClientRect();
-                var startX = event.pageX - bounding.left; //почему такая цифра, если радиус 20?
-                var startY = event.pageY - bounding.top;
-                var endX = startX;
-                var endY = startY;
+            if (brushDrag === true) {
+                radius = 9;
+                bounding = $(this)[0].getBoundingClientRect();
+                startX = endX;
+                startY = endY;
+                endX = event.pageX - bounding.left;
+                endY = event.pageY - bounding.top;
                 groupName = layer.dragGroups;
 
                 $(this).drawLine({
-                    groups: [groupName],
+                    groups: ['obvodka'],
                     dragGroups: [groupName],
                     draggable: false,
+                    intangible: true,
                     strokeWidth: radius*2,
-                    strokeStyle: 'rgba(255,240,0,0.37)',
+                    strokeStyle: lineColor,
                     strokeCap: 'round',
                     strokeJoin: 'round',
                     x1: startX, y1: startY,
                     x2: endX, y2: endY,
-                    brushDrag: true,
                 });
-                    event.preventDefault();
+            } else {
+                event.preventDefault();
             }
         },
 
-        mouseup: function (layer){
-            $(this).setLayers({
-                brushDrag: false
-            });
-            console.log(layer.brushDrag);
-            event.preventDefault();
-        },
 
         draggable: false,
         cursors: {
