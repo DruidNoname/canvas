@@ -314,7 +314,7 @@ $('#draw-switcher').click(function(){
                 groupName = layer.dragGroups;
 
                 $(this).drawLine({
-                    groups: ['obvodka'],
+                    groups: [groupName],
                     dragGroups: [groupName],
                     draggable: false,
                     intangible: true,
