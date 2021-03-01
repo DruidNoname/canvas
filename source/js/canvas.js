@@ -261,18 +261,18 @@ $('#draw-switcher').click(function(){
     $('canvas').setLayers({
         mousedown: function (layer){
             brushDrag = true;
-            var radius = 9;
+            var radius = 2;
             var unknownCoefficient = 2.5;
             var groupName = layer.dragGroups;
             var bounding = $(this)[0].getBoundingClientRect();
             startX = event.clientX - bounding.left - radius - unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
             startY = event.clientY - bounding.top - radius - unknownCoefficient;
-            endX = startX;
-            endY = startY;
+            endX = startX + radius + unknownCoefficient;
+            endY = startY + radius + unknownCoefficient;
             console.log(brushDrag);
             $(this).drawArc({
                 fillStyle: lineColor,
-                groups: ['obvodka'],
+                groups: [groupName],
                 dragGroups: [groupName],
                 draggable: false,
                 intangible: true,
@@ -305,7 +305,7 @@ $('#draw-switcher').click(function(){
 
         mousemove: function (layer) {
             if (brushDrag === true) {
-                radius = 9;
+                radius = 2;
                 bounding = $(this)[0].getBoundingClientRect();
                 startX = endX;
                 startY = endY;
