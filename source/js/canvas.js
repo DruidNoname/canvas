@@ -205,13 +205,28 @@ buildArrowSystem();
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS--*----*-----
-//
-$('#drag-switcher').click(function(){
+
+//вспомогательные функции
+
+//выключает окно, где можно редактировать текст
+var cleanse = function(){
+    return false
+};
+
+function correctorOff(){
     $('#corrector').addClass('d-none');
+}
+
+//выключает рисовалку. Она завязана на холсте, а не на параметрах слоёв, поэтому выключать её надо отдельно
+function unbindDrawing(){
+    $('canvas')
+        .unbind('mousemove', drawing)
+        .unbind('mousedown', pointing)
+        .unbind(['mouseup', 'mouseover'], aborting)
+}
+
+function layerDefaults(){
     $('canvas').setLayers({
-        mousedown: function(){
-            return false
-        },
         draggable: true,
         cursors: {
             mouseover: 'grab',
@@ -219,7 +234,19 @@ $('#drag-switcher').click(function(){
             mouseup: 'grab'
         }
     }).drawLayers();
+}
 
+
+$('#drag-switcher').click(function(){
+    correctorOff();
+    unbindDrawing();
+    layerDefaults();
+    $('#corrector').addClass('d-none');
+
+    $('canvas').setLayers({
+        mousedown: cleanse,
+        click: cleanse,
+    }).drawLayers();
     console.log('draggable');
 });
 //
@@ -249,194 +276,6 @@ $('#write-switcher').click(function(){
     }
     console.log('rewritable');
 });
-var painter = {
-    lineColor: 'rgb(255,240,0)',
-    radius: 4,
-    unknownCoefficient: 2.5,
-    brushDrag: false,
-};
 
-
-var marker = {
-    lineColor: 'rgba(255,240,0,0.46)',
-    radius: 10,
-    unknownCoefficient: 2.5,
-    brushDrag: false,
-};
-
-var startX, startY, endX, endY;
-// var lineColor = 'rgba(255,240,0,0.37)';
-// var lineColor = 'rgb(255,240,0)'
-
-// //переключатель выделения маркером
-//nb должно быть условие, что если слоя нет - элемент рисуется отдельно.
-
-$('#draw-switcher').click(function(){
-    $('canvas').mousedown(function(){
-            painter.brushDrag = true;
-            var bounding = $(this)[0].getBoundingClientRect();
-            startX = event.clientX - bounding.left - painter.radius - painter.unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
-            startY = event.clientY - bounding.top - painter.radius - painter.unknownCoefficient;
-            endX = startX + painter.radius + painter.unknownCoefficient;
-            endY = startY + painter.radius + painter.unknownCoefficient;
-            console.log(painter.brushDrag);
-            $(this).drawArc({
-                fillStyle: 'transparent',
-                groups: 'drawingLines',
-                dragGroups: 'drawingLines',
-                draggable: false,
-                intangible: true,
-                x: startX,
-                y: startY,
-                radius: painter.radius,
-                start: 0,
-                end: 360,
-            });
-            event.preventDefault();
-        }
-    );
-
-    //надо добавлять рисунок и выводить рисунок, а потом его делать прозрачным
-
-    $('canvas').mouseup(function(){
-            painter.brushDrag = false;
-            console.log( painter.brushDrag);
-            // $('canvas').setLayerGroup('obvodka', {
-            //     // opacity: 0.3
-            // });
-            event.preventDefault();
-        }
-    );
-
-    $('canvas').mouseover(function(){
-            painter.brushDrag = false;
-            console.log( painter.brushDrag);
-            event.preventDefault();
-        }
-    );
-
-
-    $('canvas').mousemove(function() {
-            $(this).css("cursor", "crosshair");
-
-            if ( painter.brushDrag === true) {
-                bounding = $(this)[0].getBoundingClientRect();
-                startX = endX;
-                startY = endY;
-                endX = event.pageX - bounding.left;
-                endY = event.pageY - bounding.top;
-
-                $(this).drawLine({
-                    groups: 'drawingLines',
-                    dragGroups: 'drawingLines',
-                    draggable: false,
-                    intangible: true,
-                    strokeWidth: painter.radius*2,
-                    strokeStyle: painter.lineColor,
-                    strokeCap: 'round',
-                    strokeJoin: 'round',
-                    x1: startX, y1: startY,
-                    x2: endX, y2: endY,
-                });
-            } else {
-                event.preventDefault();
-            }
-        }
-    );
-
-
-    $('canvas').setLayers({
-        draggable: false,
-        cursors: {
-            mouseover: 'crosshair'
-        }
-    }).drawLayers();
-    console.log('paintable');
-});
-
-
-$('#mark-switcher').click(function() {
-    $('canvas').setLayers({
-        intangible: true,
-    }, function (layer) {
-        var d = /\d+/;
-        return (layer.name === 'textLayer' + d);
-    }).drawLayers();
-
-    $('canvas').setLayers({
-        mousedown: function (layer){
-            brushDrag = true;
-            var groupName = layer.dragGroups;
-            var bounding = $(this)[0].getBoundingClientRect();
-            startX = event.clientX - bounding.left - marker.radius - marker.unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
-            startY = event.clientY - bounding.top - marker.radius - marker.unknownCoefficient;
-            endX = startX + marker.radius + marker.unknownCoefficient;
-            endY = startY + marker.radius + marker.unknownCoefficient;
-            console.log(brushDrag);
-            $(this).drawArc({
-                fillStyle: 'transparent',
-                groups: [groupName],
-                dragGroups: [groupName],
-                draggable: false,
-                intangible: true,
-                x: startX,
-                y: startY,
-                radius: marker.radius,
-                start: 0,
-                end: 360,
-            });
-            event.preventDefault();
-        },
-
-        //надо добавлять рисунок и выводить рисунок, а потом его делать прозрачным
-
-        mouseup: function (){
-            brushDrag = false;
-            console.log(brushDrag);
-            // $('canvas').setLayerGroup('obvodka', {
-            //     // opacity: 0.3
-            // });
-            event.preventDefault();
-        },
-
-        mouseover: function (){
-            brushDrag = false;
-            console.log(brushDrag);
-            event.preventDefault();
-        },
-
-
-        mousemove: function (layer) {
-            if (brushDrag === true) {
-                bounding = $(this)[0].getBoundingClientRect();
-                startX = endX;
-                startY = endY;
-                endX = event.pageX - bounding.left;
-                endY = event.pageY - bounding.top;
-                groupName = layer.dragGroups;
-
-                $(this).drawLine({
-                    groups: [groupName],
-                    dragGroups: [groupName],
-                    draggable: false,
-                    intangible: true,
-                    strokeWidth: marker.radius*2,
-                    strokeStyle: marker.lineColor,
-                    x1: startX, y1: startY,
-                    x2: endX, y2: endY,
-                });
-            } else {
-                event.preventDefault();
-            }
-        },
-
-
-        draggable: false,
-        cursors: {
-            mouseover: 'crosshair'
-        }
-    }).drawLayers();
-    console.log('markable');
-});
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS END--*----*-----
