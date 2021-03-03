@@ -196,7 +196,7 @@ var marker = {
 
 var startX, startY, endX, endY;
 
-var pointing = function(){
+var pointing = function () {
     painter.brushDrag = true;
     var bounding = $(this)[0].getBoundingClientRect();
     startX = event.clientX - bounding.left - painter.radius - painter.unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
@@ -219,10 +219,10 @@ var pointing = function(){
     event.preventDefault();
 };
 
-var drawing = function() {
+var drawing = function () {
     $(this).css("cursor", "crosshair");
 
-    if ( painter.brushDrag === true) {
+    if (painter.brushDrag === true) {
         bounding = $(this)[0].getBoundingClientRect();
         startX = endX;
         startY = endY;
@@ -234,7 +234,7 @@ var drawing = function() {
             dragGroups: 'drawingLines',
             draggable: false,
             intangible: true,
-            strokeWidth: painter.radius*2,
+            strokeWidth: painter.radius * 2,
             strokeStyle: painter.lineColor,
             strokeCap: 'round',
             strokeJoin: 'round',
@@ -246,43 +246,45 @@ var drawing = function() {
     }
 };
 
-var aborting = function(){
+var aborting = function () {
     painter.brushDrag = false;
-    console.log( painter.brushDrag);
+    console.log(painter.brushDrag);
     event.preventDefault();
 };
 
 // //переключатель выделения маркером
 //nb должно быть условие, что если слоя нет - элемент рисуется отдельно.
 
-$('#draw-switcher').click(function(){
+$('#draw-switcher').click(function () {
     correctorOff();
+    layerDefaults();
     $('canvas')
         .mousedown(pointing)
         .mouseup(aborting)
         .mouseover(aborting)
         .mousemove(drawing)
         .setLayers({
-        draggable: false,
-        cursors: {
-            mouseover: 'crosshair'
-        }
-    }).drawLayers();
+            draggable: false,
+            cursors: {
+                mouseover: 'crosshair'
+            }
+        }).drawLayers();
     console.log('paintable');
 });
 
 
-$('#mark-switcher').click(function() {
+$('#mark-switcher').click(function () {
     correctorOff();
+    unbindDrawing();
+    layerDefaults();
     $('canvas').setLayers({
         intangible: true,
     }, function (layer) {
-        var d = /\d+/;
         return (/^textLayer/.test(layer.name));
     }).drawLayers();
 
     $('canvas').setLayers({
-        mousedown: function (layer){
+        mousedown: function (layer) {
             brushDrag = true;
             var groupName = layer.dragGroups;
             var bounding = $(this)[0].getBoundingClientRect();
@@ -308,7 +310,7 @@ $('#mark-switcher').click(function() {
 
         //надо добавлять рисунок и выводить рисунок, а потом его делать прозрачным
 
-        mouseup: function (){
+        mouseup: function () {
             brushDrag = false;
             console.log(brushDrag);
             // $('canvas').setLayerGroup('obvodka', {
@@ -317,7 +319,7 @@ $('#mark-switcher').click(function() {
             event.preventDefault();
         },
 
-        mouseover: function (){
+        mouseover: function () {
             brushDrag = false;
             console.log(brushDrag);
             event.preventDefault();
@@ -338,7 +340,7 @@ $('#mark-switcher').click(function() {
                     dragGroups: [groupName],
                     draggable: false,
                     intangible: true,
-                    strokeWidth: marker.radius*2,
+                    strokeWidth: marker.radius * 2,
                     strokeStyle: marker.lineColor,
                     x1: startX, y1: startY,
                     x2: endX, y2: endY,
@@ -355,5 +357,6 @@ $('#mark-switcher').click(function() {
         }
     }).drawLayers();
     console.log('markable');
-});
+})
+
 

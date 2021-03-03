@@ -49,12 +49,6 @@ function drawWholeCardPrimary(i, coordsX, coordsY, content){
 
 function setCardDefaultOptions(cardGroup){
     $('canvas').setLayerGroup(cardGroup, {
-        cursors: {
-            mouseover: 'grab',
-            mousedown: 'grabbing',
-            mouseup: 'grab'
-        },
-
         dragstart: function() {
             $(this).removeLayerGroup('arrowSystem')
         },
@@ -226,13 +220,23 @@ function unbindDrawing(){
 }
 
 function layerDefaults(){
-    $('canvas').setLayers({
+    $('canvas')
+        .setLayers({
+        mouseup: cleanse,
+        mouseover: cleanse,
+        mousedown: cleanse,
+        click: cleanse,
         draggable: true,
         cursors: {
-            mouseover: 'grab',
-            mousedown: 'grabbing',
-            mouseup: 'grab'
+            mouseover: 'default',
+            mousedown: 'default',
+            mouseup: 'default'
         }
+    }).drawLayers()
+    .setLayers({
+        intangible: false,
+    }, function (layer) {
+        return (/^textLayer/.test(layer.name));
     }).drawLayers();
 }
 
@@ -241,18 +245,22 @@ $('#drag-switcher').click(function(){
     correctorOff();
     unbindDrawing();
     layerDefaults();
-    $('#corrector').addClass('d-none');
 
     $('canvas').setLayers({
-        mousedown: cleanse,
-        click: cleanse,
+        cursors: {
+            mouseover: 'grab',
+            mousedown: 'grabbing',
+            mouseup: 'grab'
+        }
     }).drawLayers();
     console.log('draggable');
 });
 //
-// //переключатель редактора текста работает, надо настроить
+// //переключатель редактора текста работает не так, надо настроить
 //
 $('#write-switcher').click(function(){
+    unbindDrawing();
+    layerDefaults();
     for (var i = 1; i < 5; ++i) {
         var groupName = 'cardGroup' + i;
         $('canvas').setLayerGroup(groupName, {
