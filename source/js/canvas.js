@@ -209,6 +209,7 @@ var cleanse = function(){
 
 function correctorOff(){
     $('#corrector').addClass('d-none');
+    $('#save-text').addClass('d-none');
 }
 
 //выключает рисовалку. Она завязана на холсте, а не на параметрах слоёв, поэтому выключать её надо отдельно
@@ -258,32 +259,7 @@ $('#drag-switcher').click(function(){
 //
 // //переключатель редактора текста работает не так, надо настроить
 //
-$('#write-switcher').click(function(){
-    unbindDrawing();
-    layerDefaults();
-    for (var i = 1; i < 5; ++i) {
-        var groupName = 'cardGroup' + i;
-        $('canvas').setLayerGroup(groupName, {
-            click: function (layer){
-                var index = $(this).getLayer(layer).name.replace(/\D+/g,"");
-                var textLayer = $(this).getLayer("textLayer" + index);
-                var usedText = textLayer.text;
-                console.log(usedText);
-                var victim = $("#corrector");
-                victim.removeClass('d-none');
-                victim.html(usedText);
-                victim.attr({
-                    contenteditable: true
-                });
-            },
-            draggable: false,
-            cursors: {
-                mouseover: 'text'
-            }
-        }).drawLayers();
-    }
-    console.log('rewritable');
-});
+
 
 
 // *---*----*--NON-CANVAS TOOLS SWITCHERS END--*----*-----
