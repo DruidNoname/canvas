@@ -184,6 +184,7 @@ var painter = {
     radius: 4,
     unknownCoefficient: 2.5,
     brushDrag: false,
+    groupIndex: 0,
 };
 
 
@@ -194,20 +195,23 @@ var marker = {
     brushDrag: false,
 };
 
-var startX, startY, endX, endY;
+var startX, startY, endX, endY, newGroup, bounding;
 
 var pointing = function () {
     painter.brushDrag = true;
-    var bounding = $(this)[0].getBoundingClientRect();
+    bounding = $(this)[0].getBoundingClientRect();
     startX = event.clientX - bounding.left - painter.radius - painter.unknownCoefficient; //почему такая цифра, если радиус определенное число, откуда взялся коэффициэнт в 2.5?
     startY = event.clientY - bounding.top - painter.radius - painter.unknownCoefficient;
     endX = startX + painter.radius + painter.unknownCoefficient;
     endY = startY + painter.radius + painter.unknownCoefficient;
     console.log(painter.brushDrag);
+    painter.groupIndex += 1
+    newGroup = 'drawingLine' + painter.groupIndex;
     $(this).drawArc({
-        fillStyle: 'transparent',
-        groups: 'drawingLines',
-        dragGroups: 'drawingLines',
+        layer: true,
+        fillStyle: painter.lineColor,
+        groups: [newGroup],
+        dragGroups: [newGroup],
         draggable: false,
         intangible: true,
         x: startX,
@@ -223,15 +227,16 @@ var drawing = function () {
     $(this).css("cursor", "crosshair");
 
     if (painter.brushDrag === true) {
-        bounding = $(this)[0].getBoundingClientRect();
+        // bounding = $(this)[0].getBoundingClientRect();
         startX = endX;
         startY = endY;
         endX = event.pageX - bounding.left;
         endY = event.pageY - bounding.top;
-
+        console.log(newGroup);
         $(this).drawLine({
-            groups: 'drawingLines',
-            dragGroups: 'drawingLines',
+            layer: true,
+            groups: [newGroup],
+            dragGroups: [newGroup],
             draggable: false,
             intangible: true,
             strokeWidth: painter.radius * 2,
@@ -247,9 +252,15 @@ var drawing = function () {
 };
 
 var aborting = function () {
-    painter.brushDrag = false;
-    console.log(painter.brushDrag);
-    event.preventDefault();
+    if (painter.brushDrag === true) {
+        painter.brushDrag = false;
+        console.log(painter.brushDrag);
+        $('canvas').setLayerGroup(newGroup, {
+            intangible: false
+        });
+        console.log(newGroup);
+        event.preventDefault();
+    }
 };
 
 // //переключатель выделения маркером
@@ -313,9 +324,6 @@ $('#mark-switcher').click(function () {
         mouseup: function () {
             brushDrag = false;
             console.log(brushDrag);
-            // $('canvas').setLayerGroup('obvodka', {
-            //     // opacity: 0.3
-            // });
             event.preventDefault();
         },
 
